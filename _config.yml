@@ -264,21 +264,21 @@ profile:
 myProjects:
   enable: true
   data:
-    hexo-theme-matery:
+    B612-Factory:
       icon: fas fa-file-alt
       iconBackground: 'linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)'
-      url: http://github.com/blinkfox/hexo-theme-matery
-      desc: This is a Hexo blog theme with 'Material Design' and responsive design.
-    Fenix:
+      url: https://github.com/wangjueya/B612-Factory
+      desc: 基于markdown文件的个人博客快速生成发布仓库
+    magic-book:
         icon: fas fa-database
         iconBackground: 'linear-gradient(to bottom right, #F06292 0%, #EF5350 100%)'
-        url: https://github.com/blinkfox/fenix
-        desc: 这是 Spring Data JPA 复杂或动态 SQL 查询的扩展库。
-    typora-vue-theme:
+        url: https://github.com/WANGJUEYA/magic-book
+        desc: 个人笔记仓库
+    basic-java:
         icon: fas fa-file-alt
         iconBackground: 'linear-gradient(to bottom right, #29B6F6 0%, #1E88E5 100%)'
-        url: https://github.com/blinkfox/typora-vue-theme
-        desc: This is a typora theme inspired by Vue document style.
+        url: https://github.com/WANGJUEYA/basic-java
+        desc: java代码-目前包含 leetcode相关练习
 
 # config my skills informations in about page.
 # If you don't want to display this `My Skills` content, you can deactivate or delete this configuration.
