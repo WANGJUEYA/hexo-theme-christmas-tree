@@ -18,14 +18,80 @@ var i = 0;
 var isCategory = is_category();
 %>
 
+<style>
+    .vitreous-hover {
+        outline: 0px;
+        margin: 0px;
+        padding: 2px 6px;
+        border-radius: 16px;
+        background-color: transparent;
+        text-decoration: none;
+        color: rgb(60, 72, 88);
+    }
+
+    .vitreous-hover:hover {
+        transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        color: rgba(60, 72, 88, 0.3);
+    }
+
+    /*Safari 和 Chrome:*/
+    @-webkit-keyframes turnY {
+        from {
+            transform: rotateY(0deg);
+        }
+        to {
+            transform: rotateY(360deg);
+        }
+    }
+
+    .animation-turn-btn:hover {
+        animation: turnY 5s infinite;
+        /*Safari 和 Chrome:*/
+        -webkit-animation: turnY 5s infinite;
+    }
+
+    .tag-chips {
+        transition: transform 2s;
+        transform-style: preserve-3d;
+        cursor: pointer;
+    }
+
+    .front, .back {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        backface-visibility: hidden;
+    }
+
+    .back {
+        transform: rotateY(180deg)
+    }
+
+    .hidden-back .back {
+        display: none;
+    }
+
+    .hidden-front .front {
+        display: none;
+    }
+
+</style>
+
 <div id="category-cloud" class="container chip-container">
     <div class="card">
         <div class="card-content">
             <div class="tag-title center-align">
                 <i class="fas fa-bookmark"></i>&nbsp;&nbsp;<%= __('postCategoryTitle') %>
-            </div>
-            <div class="tag-chips">
                 <% if (site.categories && site.categories.length > 0) { %>
+                    <span class="vitreous-hover" onclick="handleClickTurn()">
+                        <i class="fa-solid fa-arrows-rotate animation-turn-btn"></i>
+                    </span>
+                <% } %>
+            </div>
+            <!-- 卡片翻转 https://wow.techbrood.com/fiddle/30201 -->
+            <div id="animation-turn-card" class="tag-chips hidden-back">
+                <% if (site.categories && site.categories.length > 0) { %>
+                <div class="front">
                 <% site.categories.map(function(category) { %>
                 <%
                     i++;
@@ -41,6 +107,10 @@ var isCategory = is_category();
                     </span>
                 </a>
                 <% }); %>
+                </div>
+                <div class="back">
+                    back
+                </div>
                 <% } else { %>
                 <%= __('categoryEmptyTip') %>
                 <% } %>
@@ -48,3 +118,25 @@ var isCategory = is_category();
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    // 翻转分类
+    function handleClickTurn() {
+        let element = document.getElementById("animation-turn-card")
+        let classStr = element.className
+        let hiddenBack = "hidden-back";
+        let hiddenFront = "hidden-front";
+        if (classStr.indexOf(hiddenBack) > -1) {
+            element.style.transform = "rotateY(180deg)";
+            element.className = classStr.replaceAll(hiddenBack, hiddenFront)
+        } else if (classStr.indexOf(hiddenFront) > -1) {
+            element.style.transform = "rotateY(0deg)";
+            element.className = classStr.replaceAll(hiddenFront, hiddenBack)
+        } else {
+            element.style.transform = "rotateY(0deg)";
+            element.className = classStr + " " + hiddenBack
+        }
+    }
+
+</script>
