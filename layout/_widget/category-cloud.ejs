@@ -32,41 +32,7 @@ var curCats = site.categories.find({ parent: { $exists: false } }).sort(orderBy)
     }
 
     .vitreous-hover:hover {
-        transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
         color: rgba(60, 72, 88, 0.3);
-    }
-
-    /*Safari 和 Chrome:*/
-    @-webkit-keyframes turnY {
-        from {
-            transform: rotateY(0deg);
-        }
-        to {
-            transform: rotateY(360deg);
-        }
-    }
-
-    .animation-turn-btn:hover {
-        animation: turnY 5s infinite;
-        /*Safari 和 Chrome:*/
-        -webkit-animation: turnY 5s infinite;
-    }
-
-    .tag-chips {
-        transition: transform 2s;
-        transform-style: preserve-3d;
-        cursor: pointer;
-    }
-
-    .front, .back {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        backface-visibility: hidden;
-    }
-
-    .back {
-        transform: rotateY(180deg)
     }
 
     .hidden-back .back {
@@ -86,7 +52,7 @@ var curCats = site.categories.find({ parent: { $exists: false } }).sort(orderBy)
                 <i class="fas fa-bookmark"></i>&nbsp;&nbsp;<%= __('postCategoryTitle') %>
                 <% if (site.categories && site.categories.length > 0) { %>
                     <span class="vitreous-hover" onclick="handleClickTurn()">
-                        <i class="fa-solid fa-arrows-rotate animation-turn-btn"></i>
+                        <i class="fa-solid fa-arrows-rotate"></i>
                     </span>
                 <% } %>
             </div>
@@ -149,11 +115,9 @@ var curCats = site.categories.find({ parent: { $exists: false } }).sort(orderBy)
             showBack = !showBack
         }
         if (showBack) {
-            element.style.transform = "rotateY(180deg)";
             element.className = classStr + hiddenFront
             window.localStorage.setItem(defaultCategoryTypeKey, hiddenFront)
         } else {
-            element.style.transform = "rotateY(0deg)";
             element.className = classStr + hiddenBack
             window.localStorage.setItem(defaultCategoryTypeKey, hiddenBack)
         }
