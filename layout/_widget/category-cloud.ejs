@@ -16,6 +16,8 @@ var hashCode = function (str) {
 };
 var i = 0;
 var isCategory = is_category();
+var orderBy = theme.category.order_by || 'name'
+var curCats = site.categories.find({ parent: { $exists: false } }).sort(orderBy).filter(cat => cat.length)
 %>
 
 <style>
@@ -108,8 +110,19 @@ var isCategory = is_category();
                 </a>
                 <% }); %>
                 </div>
-                <div class="back">
-                    back
+                <div class="back category-bar">
+                    <div class="row">
+                        <div class="col-12 col-md-10 m-auto">
+                            <%- partial('_widget/category-list', {
+                                curCats: curCats,
+                                params: {
+                                    orderBy: orderBy,
+                                    postLimit  : theme.category.post_limit,
+                                    postOrderBy: theme.category.post_order_by || config.index_generator.order_by
+                                }
+                            }) %>
+                        </div>
+                    </div>
                 </div>
                 <% } else { %>
                 <%= __('categoryEmptyTip') %>
@@ -121,21 +134,28 @@ var isCategory = is_category();
 
 <script type="text/javascript">
 
+    var defaultCategoryTypeKey = "defaultCategoryType";
+    handleClickTurn(true)
+
     // 翻转分类
-    function handleClickTurn() {
+    function handleClickTurn(keep = false) {
+        let defaultCategoryType = window.localStorage.getItem(defaultCategoryTypeKey) || 'hidden-back'
         let element = document.getElementById("animation-turn-card")
-        let classStr = element.className
+        let classStr = "tag-chips ";
         let hiddenBack = "hidden-back";
         let hiddenFront = "hidden-front";
-        if (classStr.indexOf(hiddenBack) > -1) {
+        let showBack = defaultCategoryType === hiddenBack;
+        if(keep) {
+            showBack = !showBack
+        }
+        if (showBack) {
             element.style.transform = "rotateY(180deg)";
-            element.className = classStr.replaceAll(hiddenBack, hiddenFront)
-        } else if (classStr.indexOf(hiddenFront) > -1) {
-            element.style.transform = "rotateY(0deg)";
-            element.className = classStr.replaceAll(hiddenFront, hiddenBack)
+            element.className = classStr + hiddenFront
+            window.localStorage.setItem(defaultCategoryTypeKey, hiddenFront)
         } else {
             element.style.transform = "rotateY(0deg)";
-            element.className = classStr + " " + hiddenBack
+            element.className = classStr + hiddenBack
+            window.localStorage.setItem(defaultCategoryTypeKey, hiddenBack)
         }
     }
 
