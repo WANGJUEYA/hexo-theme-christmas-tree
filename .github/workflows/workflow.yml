@@ -1,0 +1,26 @@
+name: Sync To Parent Repository
+on: [ push, delete, create ]
+jobs:
+  git-mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure Private Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+      - name: Push Mirror
+        env:
+          PARENT_REPOSITORY: 'git@github.com:WANGJUEYA/B612-Factory.git'
+          USER_NAME: 'wangjueya_ci'
+          USER_EMAIL: '573711282@qq.com'
+        run: |
+          git config --global user.name "$USER_NAME"
+          git config --global user.email "$USER_EMAIL"
+          git clone "$PARENT_REPOSITORY" Repository --recursive
+          cd Repository
+          git submodule update --remote
+          git add *
+          git commit -m ":construction_worker: Auto Sync"
+          git push
