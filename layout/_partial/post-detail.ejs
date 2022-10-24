@@ -67,6 +67,14 @@
                         <span id="busuanzi_value_page_pv"></span>
                     </div>
 				<% } %>
+
+                <% if (theme.postInfo.sourceUrl) { %>
+                <div class="info-break-policy" style='margin-left: 3px'>
+                    <a href="<%=`${theme.postInfo.sourceUrl}${page.source.substr(page.source.indexOf('/')+1)}`%>">
+                        <i class="far fa-regular fa-pen-to-square"></i>
+                    </a>
+                </div>
+                <% } %>
             </div>
         </div>
         <hr class="clearfix">
