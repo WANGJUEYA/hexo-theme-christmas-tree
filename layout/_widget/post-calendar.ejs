@@ -20,9 +20,10 @@
     // post and count map.
     var dateMap = new Map();
     site.posts.forEach(function (post) {
-        var date = post.date.format('YYYY-MM-DD');
-        var count = dateMap.get(date);
-        dateMap.set(date, count == null || count == undefined ? 1 : count + 1);
+        let date = post.date.format('YYYY-MM-DD');
+        dateMap.set(date, (dateMap.get(date) || 0) + 1);
+        date = post.updated.format('YYYY-MM-DD');
+        dateMap.set(date, (dateMap.get(date) || 0) + 1);
     });
 
     // loop the data for the current year, generating the number of post per day
