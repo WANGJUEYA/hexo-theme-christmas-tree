@@ -13,6 +13,9 @@ menu:
   Archives:
     url: /archives
     icon: fas fa-archive
+  Tips:
+    url: /tips
+    icon: fa-solid fa-wand-magic-sparkles
   About:
     url: /about
     icon: fas fa-user-circle
