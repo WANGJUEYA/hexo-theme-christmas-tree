@@ -50,4 +50,4 @@ hexo.extend.filter.register('before_post_render', async function (data) {
     } else {
         return undefined;
     }
-}, 1);
+}, 9);
